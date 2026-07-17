@@ -2,7 +2,6 @@ import { useState } from 'react'
 
 const Header = ({title}) => <h1>{title}</h1>
 const Display = ({counter}) => <div>{counter}</div>
-const Statistic = (props) => <p>{props.feedback} : {props.count}</p>
 const Button = (props) => {
   const {onClick,text} = props
   console.log('props value is', props)
@@ -24,6 +23,27 @@ const History = (props) => {
     </div>
   )
 }
+
+const Statistic = (props) => {
+  const total = props.good + props.neutral + props.bad
+  const length = Object.keys(props).length
+  const average = total/length
+  const positivePercentage = props.good/total * 100
+
+  return (
+    <div>
+      <p> good : {props.good}</p>
+      <p> neutral: {props.neutral}</p>
+      <p> bad : {props.bad}</p>
+      <p> All : {total}</p>
+      <p> Average : {average}</p>
+      <p> Positive : {positivePercentage}</p>
+    </div>
+    
+  )
+
+}
+
 
 // const App = () => {
 //   const [left, setLeft] = useState(0)
@@ -98,9 +118,7 @@ const App = () => {
       <>
       <Header title='statistics' />
       </>
-      <Statistic feedback="good" count={good} />
-      <Statistic feedback="neutral" count={neutral} />
-      <Statistic feedback="bad" count={bad} />
+      <Statistic good={good} neutral={neutral} bad={bad}/>
 
     </div>
   )
