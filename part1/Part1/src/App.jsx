@@ -26,22 +26,27 @@ const History = (props) => {
 
 const Statistic = (props) => {
   const total = props.good + props.neutral + props.bad
-  const length = Object.keys(props).length
-  const average = total/length
-  const positivePercentage = (props.good / total) * 100
+  const average = total > 0 ? (total / 3) : 0
+  const positivePercentage = total > 0 ? (props.good / total) * 100 : 0
+
+  if (total === 0) {
+    return (
+      <div>
+        No feedback given
+      </div>
+    )
+  }
 
   return (
     <div>
-      <p> good : {props.good}</p>
-      <p> neutral: {props.neutral}</p>
-      <p> bad : {props.bad}</p>
-      <p> All : {total}</p>
-      <p> Average : {average}</p>
-      <p> Positive : {positivePercentage.toFixed(1)}%</p>
+      <p>good: {props.good}</p>
+      <p>neutral: {props.neutral}</p>
+      <p>bad: {props.bad}</p>
+      <p>all: {total}</p>
+      <p>average: {average}</p>
+      <p>positive: {positivePercentage.toFixed(1)}%</p>
     </div>
-    
   )
-
 }
 
 
