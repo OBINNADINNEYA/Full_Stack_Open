@@ -9,6 +9,9 @@ const Button = (props) => {
   <button onClick={onClick}> {text} </button>)
 }
 
+const Statisticsline = (props) =>  {
+  return(<p>{props.statsname}: {props.value}</p>)
+}
 const History = (props) => {
   if (props.allClicks.length === 0) {
     return (
@@ -39,15 +42,19 @@ const Statistic = (props) => {
 
   return (
     <div>
-      <p>good: {props.good}</p>
-      <p>neutral: {props.neutral}</p>
-      <p>bad: {props.bad}</p>
-      <p>all: {total}</p>
+      <Statisticsline statsname='good' value={props.good}/>
+      <Statisticsline statsname='neutral' value={props.neutral}/>
+      <Statisticsline statsname='bad' value={props.bad}/>
+      <Statisticsline statsname='all' value={total}/>
+      <Statisticsline statsname='average' value={average}/>
+      <Statisticsline statsname='positive' value={positivePercentage}/>
+
       <p>average: {average}</p>
       <p>positive: {positivePercentage.toFixed(1)}%</p>
     </div>
   )
 }
+
 
 
 // const App = () => {
