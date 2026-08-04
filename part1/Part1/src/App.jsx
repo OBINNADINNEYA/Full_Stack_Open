@@ -28,7 +28,7 @@ const Statistic = (props) => {
   const total = props.good + props.neutral + props.bad
   const length = Object.keys(props).length
   const average = total/length
-  const positivePercentage = props.good/total * 100
+  const positivePercentage = (props.good / total) * 100
 
   return (
     <div>
@@ -37,7 +37,7 @@ const Statistic = (props) => {
       <p> bad : {props.bad}</p>
       <p> All : {total}</p>
       <p> Average : {average}</p>
-      <p> Positive : {positivePercentage}</p>
+      <p> Positive : {positivePercentage.toFixed(1)}%</p>
     </div>
     
   )
