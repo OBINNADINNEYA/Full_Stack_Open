@@ -50,7 +50,7 @@ const Statistic = (props) => {
       <StatisticLine statsname='bad' value={props.bad}/>
       <StatisticLine statsname='all' value={total}/>
       <StatisticLine statsname='average' value={average}/>
-      <StatisticLine statsname='positive' value={positivePercentage.toFixed(1)}/>
+      <StatisticLine statsname='positive' value={`${positivePercentage.toFixed(1)} %`} />
       </tbody>
     </table>
   )
