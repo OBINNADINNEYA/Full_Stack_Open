@@ -9,8 +9,10 @@ const Button = (props) => {
   <button onClick={onClick}> {text} </button>)
 }
 
-const Statisticsline = (props) =>  {
-  return(<p>{props.statsname}: {props.value}</p>)
+const StatisticLine = (props) =>  {
+  return(<tr>
+          <td>{props.statsname}: {props.value}</td>
+        </tr>)
 }
 const History = (props) => {
   if (props.allClicks.length === 0) {
@@ -41,17 +43,16 @@ const Statistic = (props) => {
   }
 
   return (
-    <div>
-      <Statisticsline statsname='good' value={props.good}/>
-      <Statisticsline statsname='neutral' value={props.neutral}/>
-      <Statisticsline statsname='bad' value={props.bad}/>
-      <Statisticsline statsname='all' value={total}/>
-      <Statisticsline statsname='average' value={average}/>
-      <Statisticsline statsname='positive' value={positivePercentage}/>
-
-      <p>average: {average}</p>
-      <p>positive: {positivePercentage.toFixed(1)}%</p>
-    </div>
+    <table>
+      <tbody>
+      <StatisticLine statsname='good' value={props.good}/>
+      <StatisticLine statsname='neutral' value={props.neutral}/>
+      <StatisticLine statsname='bad' value={props.bad}/>
+      <StatisticLine statsname='all' value={total}/>
+      <StatisticLine statsname='average' value={average}/>
+      <StatisticLine statsname='positive' value={positivePercentage.toFixed(1)}/>
+      </tbody>
+    </table>
   )
 }
 
