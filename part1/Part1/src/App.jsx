@@ -37,9 +37,8 @@ const History = (props) => {
 
 const Statistic = (props) => {
   const total = props.good + props.neutral + props.bad
-  const length = Object.keys(props).length
-  const average = total/length
-  const positivePercentage = props.good/total * 100
+  const average = total > 0 ? (total / 3) : 0
+  const positivePercentage = total > 0 ? (props.good / total) * 100 : 0
 
   return (
     <table>
@@ -56,6 +55,28 @@ const Statistic = (props) => {
   )
 
 }
+  if (total === 0) {
+    return (
+      <div>
+        No feedback given
+      </div>
+    )
+  }
+
+  return (
+    <table>
+      <tbody>
+      <StatisticLine statsname='good' value={props.good}/>
+      <StatisticLine statsname='neutral' value={props.neutral}/>
+      <StatisticLine statsname='bad' value={props.bad}/>
+      <StatisticLine statsname='all' value={total}/>
+      <StatisticLine statsname='average' value={average}/>
+      <StatisticLine statsname='positive' value={`${positivePercentage.toFixed(1)} %`} />
+      </tbody>
+    </table>
+  )
+}
+
 
 
 // const App = () => {
