@@ -2,11 +2,22 @@ import { useState } from 'react'
 
 const Header = ({title}) => <h1>{title}</h1>
 const Display = ({counter}) => <div>{counter}</div>
+
 const Button = (props) => {
   const {onClick,text} = props
   console.log('props value is', props)
   return(
   <button onClick={onClick}> {text} </button>)
+}
+
+const StatisticLine = (props) => {
+  return (
+    <tr>
+      <td> 
+      {props.text} : {props.value} 
+      </td>
+    </tr>
+  )
 }
 
 const History = (props) => {
@@ -31,14 +42,16 @@ const Statistic = (props) => {
   const positivePercentage = props.good/total * 100
 
   return (
-    <div>
-      <p> good : {props.good}</p>
-      <p> neutral: {props.neutral}</p>
-      <p> bad : {props.bad}</p>
-      <p> All : {total}</p>
-      <p> Average : {average}</p>
-      <p> Positive : {positivePercentage}</p>
-    </div>
+    <table>
+      <tbody>
+      <StatisticLine text="good" value={props.good} />
+      <StatisticLine text="neutral" value={props.neutral} />
+      <StatisticLine text="bad" value={props.bad} />
+      <StatisticLine text="All" value={total} />
+      <StatisticLine text="Average" value={average} />
+      <StatisticLine text="Positive" value={`${positivePercentage}%`} />
+      </tbody>
+    </table>
     
   )
 
