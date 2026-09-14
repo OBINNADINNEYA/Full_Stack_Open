@@ -1,5 +1,8 @@
 import { useState } from 'react'
 import Person from './components/Person'
+import Header from './components/Header'
+import Filter from './components/Filter'
+import PersonForm from './components/PersonForm'
 
 // const App = () => {
 
@@ -117,61 +120,82 @@ import Person from './components/Person'
 // }
 
 
+
+
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
-  ]) 
+     { name: 'Arto Hellas', number: '647888787', id: 1 },
+    { name: 'Ada Lovelace', number: '647888783', id: 2 },
+    { name: 'Dan Abramov', number: '647888784', id: 3 },
+    { name: 'Mary Poppendieck', number: '647888785', id: 4 }
+  ])
   const [newName, setNewName] = useState('')
+  const [newNumber, setNewNumber] = useState('')
+  const [newQuery, setnewQuery] = useState('')
+  const [filteredPersons,setfilteredPersons]  = useState([])
 
    const handlePersonChange = (event) => {
     console.log(event.target.value)
     setNewName(event.target.value)
     }
 
-  //add the submit handler and stop the default setting 
+    const handleNumberChange = (event) => {
+    console.log(event.target.value)
+    setNewNumber(event.target.value)
+    }
+
+    const handleFilterChange = (event) => {
+      const query = event.target.value
+      console.log(query)
+      setnewQuery(query)
+      setfilteredPersons(
+        persons.filter((person) =>
+          person.name.toLowerCase().includes(query.toLowerCase())
+        )
+      )
+      console.log(filteredPersons)
+    }
+
     const addPerson = (event) => {
-    event.preventDefault()
-    console.log('button clicked', event.target)
+      event.preventDefault()
+      console.log('button clicked', event.target)
 
-    //create the new person to save 
-    const personObject = {
-    name : newName,
+      //create the new person to save 
+      const personObject = {
+      name : newName,
+      number: newNumber
+      }
+
+      // append person to persons or number only if the person doesnt already exist and if none are empty 
+      const nameExists = persons.some(person => person.name.toLowerCase().trim() == personObject.name.toLowerCase().trim())
+      const numberExists = persons.some(person => person.number.toLowerCase().trim() == personObject.number.toLowerCase().trim())
+
+      if (!nameExists && !numberExists){
+        setPersons(persons.concat(personObject)) 
+      }
+      else {
+        alert(`${personObject.name} or ${personObject.number} is already added to the phonebook`);
+      }
+      setNewName('')
+      setNewNumber('')
+
     }
-
-    // append person to persons only if the person doesnt already exist 
-    const nameExists = persons.some(person => person.name.toLowerCase().trim() == personObject.name.toLowerCase().trim())
-
-    //add if name doesnot exist 
-    if (!nameExists){
-       setPersons(persons.concat(personObject)) 
-    }
-    else {
-      alert(`${personObject.name} is already added to the phonebook`);
-    }
-    setNewName('')
-
-  }
 
   
 
   
   return (
     <div>
-      <h2>Phonebook</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input value={newName} onChange={handlePersonChange}/>
-        </div>
-        <div>
-          <button type="submit" >add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-        {persons.map(person => <Person key={persons.indexOf(person)} person={person}/>)}
-
-
-
-      <div>debug: {newName}</div>
+      <Header title='Phonebook'/>
+        <Filter value={newQuery} handleFilterChange={handleFilterChange}/>
+        <PersonForm addPerson={addPerson} handleNumberChange={handleNumberChange} handlePersonChange={handleNumberChange} newName={newName} newNumber={newNumber}/>
+      
+      <Header title='Numbers'/>
+        {filteredPersons.length > 0 ? (
+          filteredPersons.map(person => <Person key={person.id} person={person}/>)) :
+          persons.map(person => <Person key={person.id} person={person}/>)
+        }
+      {/* <div>debug: {newName} : {newNumber}</div> */}
     </div>
   )
 }
